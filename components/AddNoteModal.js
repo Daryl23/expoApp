@@ -7,22 +7,6 @@ import {
   View,
 } from "react-native";
 
-<<<<<<< Updated upstream
-const AddNoteModal = ({
-  visible,
-  newNote,
-  onChangeNote,
-  onCancel,
-  onSave,
-  selectedNote,
-}) => {
-  return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={onCancel}
-=======
 //function based component
 const AddNoteModal = ({
   isModalVisible,
@@ -38,46 +22,27 @@ const AddNoteModal = ({
       transparent={true}
       animationType="slide"
       onRequestClose={() => setIsModalVisible(false)}
->>>>>>> Stashed changes
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>
-<<<<<<< Updated upstream
-            {selectedNote !== null ? "Edit Note" : "Add New Note"}
-=======
             {selectedNote ? "Edit Note" : "Add New Note"}
->>>>>>> Stashed changes
           </Text>
           <TextInput
             style={styles.modalInput}
             placeholder="Write your note here..."
             multiline
             value={newNote}
-<<<<<<< Updated upstream
-            onChangeText={onChangeNote}
-          />
-          <View style={styles.modalActions}>
-            <TouchableOpacity
-              onPress={onCancel}
-=======
             onChangeText={setNewNote}
           />
           <View style={styles.modalActions}>
             <TouchableOpacity
               onPress={() => setIsModalVisible(false)}
->>>>>>> Stashed changes
               style={[styles.modalButton, { backgroundColor: "#ccc" }]}
             >
               <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
-<<<<<<< Updated upstream
-              onPress={onSave}
-              style={[styles.modalButton, { backgroundColor: "#2196F3" }]}
-            >
-              <Text style={{ color: "#fff" }}>Save</Text>
-=======
               onPress={() => {
                 saveNote();
               }}
@@ -86,7 +51,6 @@ const AddNoteModal = ({
               <Text style={{ color: "#fff" }}>
                 {selectedNote ? "Update" : "Save"}
               </Text>
->>>>>>> Stashed changes
             </TouchableOpacity>
           </View>
         </View>
@@ -95,14 +59,10 @@ const AddNoteModal = ({
   );
 };
 
-<<<<<<< Updated upstream
-const styles = StyleSheet.create({
-=======
 export default AddNoteModal;
 
 const styles = StyleSheet.create({
   //Modal styles
->>>>>>> Stashed changes
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
@@ -150,13 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
-<<<<<<< Updated upstream
-});
-
-export default AddNoteModal;
-=======
   modalButtonText: {
     fontSize: 16,
   },
 });
->>>>>>> Stashed changes

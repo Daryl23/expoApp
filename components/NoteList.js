@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-// components/NoteList.js
-
-=======
->>>>>>> Stashed changes
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   FlatList,
@@ -12,9 +7,6 @@ import {
   View,
 } from "react-native";
 
-<<<<<<< Updated upstream
-const NoteList = ({ notes, onEdit, onDelete }) => {
-=======
 const NoteList = ({
   notes,
   deleteNote,
@@ -22,7 +14,6 @@ const NoteList = ({
   setNewNote,
   setIsModalVisible,
 }) => {
->>>>>>> Stashed changes
   return (
     <FlatList
       data={notes}
@@ -32,12 +23,6 @@ const NoteList = ({
         <View style={styles.noteItem}>
           <Text style={styles.noteText}>{item.content}</Text>
           <View style={styles.iconContainer}>
-<<<<<<< Updated upstream
-            <TouchableOpacity onPress={() => onEdit(item)}>
-              <MaterialIcons name="edit" size={20} color="blue" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => onDelete(item.id)}>
-=======
             <TouchableOpacity
               onPress={() => {
                 // Logic to edit a note
@@ -52,7 +37,6 @@ const NoteList = ({
               <MaterialIcons name="edit" size={20} color="blue" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => deleteNote(item.id)}>
->>>>>>> Stashed changes
               <MaterialIcons name="delete" size={20} color="red" />
             </TouchableOpacity>
           </View>
@@ -62,11 +46,8 @@ const NoteList = ({
   );
 };
 
-<<<<<<< Updated upstream
-=======
 export default NoteList;
 
->>>>>>> Stashed changes
 const styles = StyleSheet.create({
   noteItem: {
     flexDirection: "row",
@@ -88,8 +69,3 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-<<<<<<< Updated upstream
-
-export default NoteList;
-=======
->>>>>>> Stashed changes
