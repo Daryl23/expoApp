@@ -1,12 +1,11 @@
+import AddNoteModal from "@/components/AddNoteModal";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
   Alert,
   FlatList,
-  Modal,
   StyleSheet,
   Text,
-  TextInput,
   ToastAndroid,
   TouchableOpacity,
   View,
@@ -108,48 +107,19 @@ const NoteScreen = () => {
         <MaterialIcons name="add" size={24} color="white" />
         <Text style={styles.addButtonText}>Add Note</Text>
       </TouchableOpacity>
-      <Modal
+
+      <AddNoteModal
         visible={isModalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
-              {selectedNote !== null ? "Edit Note" : "Add New Note"}
-            </Text>
-            <TextInput
-              style={styles.modalInput}
-              placeholder="Write your note here..."
-              multiline
-              value={newNote}
-              onChangeText={setNewNote}
-            />
-            <View style={styles.modalActions}>
-              <TouchableOpacity
-                onPress={() => {
-                  setIsModalVisible(false);
-                  setNewNote("");
-                  setSelectedNote(null);
-                }}
-                style={[styles.modalButton, { backgroundColor: "#ccc" }]}
-              >
-                <Text>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  handleSaveNote();
-                  setIsModalVisible(false);
-                }}
-                style={[styles.modalButton, { backgroundColor: "#2196F3" }]}
-              >
-                <Text style={{ color: "#fff" }}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        newNote={newNote}
+        onChangeNote={setNewNote}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setNewNote("");
+          setSelectedNote(null);
+        }}
+        onSave={handleSaveNote}
+        selectedNote={selectedNote}
+      />
     </View>
   );
 };
