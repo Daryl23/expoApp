@@ -17,14 +17,6 @@ const NoteScreen = () => {
     { id: 1, content: "First Note." },
     { id: 2, content: "Second Note." },
     { id: 3, content: "Third Note." },
-    { id: 4, content: "Fourth Note." },
-    { id: 5, content: "Fifth Note." },
-    { id: 6, content: "Sixth Note." },
-    { id: 7, content: "Seventh Note." },
-    { id: 8, content: "Eighth Note." },
-    { id: 9, content: "Ninth Note." },
-    { id: 10, content: "Tenth Note." },
-    { id: 11, content: "Eleventh Note." },
   ]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,6 +24,7 @@ const NoteScreen = () => {
 
   const [selectedNote, setSelectedNote] = useState(null);
 
+<<<<<<< Updated upstream
   const handleSaveNote = () => {
     if (newNote.trim()) {
       if (selectedNote !== null) {
@@ -57,17 +50,57 @@ const NoteScreen = () => {
   };
 
   const handleDeleteNote = (id) => {
+=======
+  const saveNote = () => {
+    if (newNote.trim() !== "") {
+      if (selectedNote) {
+        //Editing an existing note
+        setNotes(
+          notes.map((note) =>
+            note.id === selectedNote.id
+              ? { ...note, content: newNote.trim() }
+              : note
+          )
+        );
+        ToastAndroid.show("Note updated successfully!", ToastAndroid.SHORT);
+      } else {
+        // Adding a new note
+        // Generate new ID for the note
+        const newId = notes.length > 0 ? notes[notes.length - 1].id + 1 : 1;
+
+        // Add new note to the list
+        setNotes([...notes, { id: newId, content: newNote.trim() }]);
+
+        ToastAndroid.show("Note added successfully!", ToastAndroid.SHORT);
+      }
+      setNewNote(""); // Clearing Input
+      setSelectedNote(null); // Clear selected note after editing
+      setIsModalVisible(false); // Close Modal
+    }
+  };
+
+  const deleteNote = (id) => {
+>>>>>>> Stashed changes
     Alert.alert("Delete Note", "Are you sure you want to delete this note?", [
       { text: "Cancel", style: "cancel" },
       {
         text: "Delete",
         style: "destructive",
         onPress: () => {
+<<<<<<< Updated upstream
           setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
           // Alternatively, you can use the following line to delete a note:
           // setNotes(notes.filter((note) => note.id !== id));
 
           ToastAndroid.show("Note deleted!", ToastAndroid.SHORT);
+=======
+          // Logic to edit a note
+          // setNotes(...) updates the notes state
+          // notes.filter() creates a new array excluding the note with the specified id
+          // note.id !== id filters out the note to be deleted
+          setNotes(notes.filter((note) => note.id !== id));
+          ToastAndroid.show("Note deleted successfully!", ToastAndroid.SHORT);
+>>>>>>> Stashed changes
         },
       },
     ]);
@@ -76,6 +109,7 @@ const NoteScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Notes</Text>
+<<<<<<< Updated upstream
       <NoteList
         notes={notes}
         onEdit={(item) => {
@@ -84,6 +118,15 @@ const NoteScreen = () => {
           setIsModalVisible(true);
         }}
         onDelete={handleDeleteNote}
+=======
+
+      <NoteList
+        notes={notes}
+        deleteNote={deleteNote}
+        setSelectedNote={setSelectedNote}
+        setNewNote={setNewNote}
+        setIsModalVisible={setIsModalVisible}
+>>>>>>> Stashed changes
       />
 
       <TouchableOpacity
@@ -95,6 +138,7 @@ const NoteScreen = () => {
       </TouchableOpacity>
 
       <AddNoteModal
+<<<<<<< Updated upstream
         visible={isModalVisible}
         newNote={newNote}
         onChangeNote={setNewNote}
@@ -104,6 +148,13 @@ const NoteScreen = () => {
           setSelectedNote(null);
         }}
         onSave={handleSaveNote}
+=======
+        isModalVisible={isModalVisible}
+        newNote={newNote}
+        setNewNote={setNewNote}
+        setIsModalVisible={setIsModalVisible}
+        saveNote={saveNote}
+>>>>>>> Stashed changes
         selectedNote={selectedNote}
       />
     </View>
@@ -123,25 +174,6 @@ const styles = StyleSheet.create({
     color: "#444",
     marginBottom: 10,
   },
-  noteItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#f9f9f9",
-    borderRadius: 6,
-    marginBottom: 10,
-  },
-  noteText: {
-    fontSize: 16,
-    flex: 1,
-  },
-  iconContainer: {
-    flexDirection: "row",
-    gap: 10,
-    marginLeft: 10,
-  },
   addButton: {
     flexDirection: "row",
     alignItems: "center",
@@ -158,57 +190,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     marginLeft: 8,
-  },
-  //Modal styles
-  modalOverlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.4)",
-  },
-  modalContent: {
-    width: "90%",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 15,
-    textAlign: "center",
-    color: "#333",
-  },
-  modalInput: {
-    height: 100,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    fontSize: 16,
-    textAlignVertical: "top",
-    color: "#333",
-    marginBottom: 20,
-  },
-  modalActions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  modalButton: {
-    flex: 1,
-    paddingVertical: 12,
-    marginHorizontal: 5,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  modalButtonText: {
-    fontSize: 16,
   },
 });
 
