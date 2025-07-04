@@ -30,14 +30,29 @@ const NoteScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newNote, setNewNote] = useState("");
 
-  const handleAddNote = () => {
-    if (newNote.trim()) {
-      const newId = notes.length ? notes[notes.length - 1].id + 1 : 1;
-      setNotes([...notes, { id: newId, content: newNote }]);
-      setNewNote("");
-      setIsModalVisible(false);
+  const [selectedNote, setSelectedNote] = useState(null);
 
-      ToastAndroid.show("Note added!", ToastAndroid.SHORT);
+  const handleSaveNote = () => {
+    if (newNote.trim()) {
+      if (selectedNote !== null) {
+        // Editing
+        setNotes((prevNotes) =>
+          prevNotes.map((note) =>
+            note.id === selectedNote ? { ...note, content: newNote } : note
+          )
+        );
+        ToastAndroid.show("Note updated!", ToastAndroid.SHORT);
+      } else {
+        // Adding
+        const newId = notes.length ? notes[notes.length - 1].id + 1 : 1;
+        setNotes([...notes, { id: newId, content: newNote }]);
+        ToastAndroid.show("Note added!", ToastAndroid.SHORT);
+      }
+
+      // Reset modal state
+      setNewNote("");
+      setSelectedNote(null);
+      setIsModalVisible(false);
     }
   };
 
@@ -69,7 +84,13 @@ const NoteScreen = () => {
           <View style={styles.noteItem}>
             <Text style={styles.noteText}>{item.content}</Text>
             <View style={styles.iconContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedNote(item.id);
+                  setNewNote(item.content);
+                  setIsModalVisible(true);
+                }}
+              >
                 <MaterialIcons name="edit" size={20} color="blue" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
@@ -95,7 +116,9 @@ const NoteScreen = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Add New Note</Text>
+            <Text style={styles.modalTitle}>
+              {selectedNote !== null ? "Edit Note" : "Add New Note"}
+            </Text>
             <TextInput
               style={styles.modalInput}
               placeholder="Write your note here..."
@@ -105,14 +128,18 @@ const NoteScreen = () => {
             />
             <View style={styles.modalActions}>
               <TouchableOpacity
-                onPress={() => setIsModalVisible(false)}
+                onPress={() => {
+                  setIsModalVisible(false);
+                  setNewNote("");
+                  setSelectedNote(null);
+                }}
                 style={[styles.modalButton, { backgroundColor: "#ccc" }]}
               >
                 <Text>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  handleAddNote();
+                  handleSaveNote();
                   setIsModalVisible(false);
                 }}
                 style={[styles.modalButton, { backgroundColor: "#2196F3" }]}
