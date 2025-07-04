@@ -1,9 +1,10 @@
 import AddNoteModal from "@/components/AddNoteModal";
+import NoteList from "@/components/NoteList";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
   Alert,
-  FlatList,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -75,29 +76,14 @@ const NoteScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Notes</Text>
-      <FlatList
-        data={notes}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        renderItem={({ item }) => (
-          <View style={styles.noteItem}>
-            <Text style={styles.noteText}>{item.content}</Text>
-            <View style={styles.iconContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setSelectedNote(item.id);
-                  setNewNote(item.content);
-                  setIsModalVisible(true);
-                }}
-              >
-                <MaterialIcons name="edit" size={20} color="blue" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
-                <MaterialIcons name="delete" size={20} color="red" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
+      <NoteList
+        notes={notes}
+        onEdit={(item) => {
+          setSelectedNote(item.id);
+          setNewNote(item.content);
+          setIsModalVisible(true);
+        }}
+        onDelete={handleDeleteNote}
       />
 
       <TouchableOpacity
