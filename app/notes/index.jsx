@@ -26,6 +26,16 @@ const NoteScreen = () => {
   ]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [newNote, setNewNote] = useState("");
+
+  const handleAddNote = () => {
+    if (newNote.trim()) {
+      const newId = notes.length ? notes[notes.length - 1].id + 1 : 1;
+      setNotes([...notes, { id: newId, content: newNote }]);
+      setNewNote("");
+      setIsModalVisible(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -69,6 +79,8 @@ const NoteScreen = () => {
               style={styles.modalInput}
               placeholder="Write your note here..."
               multiline
+              value={newNote}
+              onChangeText={setNewNote}
             />
             <View style={styles.modalActions}>
               <TouchableOpacity
@@ -79,7 +91,7 @@ const NoteScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  // No function yet
+                  handleAddNote();
                   setIsModalVisible(false);
                 }}
                 style={[styles.modalButton, { backgroundColor: "#2196F3" }]}
