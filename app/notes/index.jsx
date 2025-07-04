@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
+  Alert,
   FlatList,
   Modal,
   StyleSheet,
@@ -37,6 +38,21 @@ const NoteScreen = () => {
     }
   };
 
+  const handleDeleteNote = (id) => {
+    Alert.alert("Delete Note", "Are you sure you want to delete this note?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => {
+          setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+          // Alternatively, you can use the following line to delete a note:
+          // setNotes(notes.filter((note) => note.id !== id));
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Notes</Text>
@@ -51,7 +67,7 @@ const NoteScreen = () => {
               <TouchableOpacity>
                 <MaterialIcons name="edit" size={20} color="blue" />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
                 <MaterialIcons name="delete" size={20} color="red" />
               </TouchableOpacity>
             </View>
