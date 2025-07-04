@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -35,6 +36,8 @@ const NoteScreen = () => {
       setNotes([...notes, { id: newId, content: newNote }]);
       setNewNote("");
       setIsModalVisible(false);
+
+      ToastAndroid.show("Note added!", ToastAndroid.SHORT);
     }
   };
 
@@ -48,6 +51,8 @@ const NoteScreen = () => {
           setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
           // Alternatively, you can use the following line to delete a note:
           // setNotes(notes.filter((note) => note.id !== id));
+
+          ToastAndroid.show("Note deleted!", ToastAndroid.SHORT);
         },
       },
     ]);
